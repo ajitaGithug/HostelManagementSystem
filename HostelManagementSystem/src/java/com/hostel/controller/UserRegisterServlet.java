@@ -77,7 +77,8 @@ public class UserRegisterServlet extends HttpServlet {
         String role = request.getParameter("role");
 
         String prefix = role.equals("student") ? "stu" :
-                        role.equals("staff") ? "sta" : "adm";
+                        role.equals("staff") ? "sta" : 
+                        role.equals("admin") ? "adm" : "";
         
         try (Connection conn = DBConnection.getConnection()) {
             String countSql = "SELECT COUNT(*) FROM user WHERE role = ?";
