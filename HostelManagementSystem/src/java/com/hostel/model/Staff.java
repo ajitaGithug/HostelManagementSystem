@@ -12,6 +12,7 @@ public class Staff extends User {
     private String position;
     private String contactNo;
     private int minMeritRequired;
+    private String photo;
     
     public Staff () {}
     

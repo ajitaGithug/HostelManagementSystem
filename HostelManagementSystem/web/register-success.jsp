@@ -9,7 +9,7 @@
 <head><title>Registration Successful</title></head>
 <body>
     <h2>Registration successful!</h2>
-    <a href="register.jsp">Register another user</a>
+    <a href="staff-register.jsp">Register another user</a>
 </body>
 </html>
 

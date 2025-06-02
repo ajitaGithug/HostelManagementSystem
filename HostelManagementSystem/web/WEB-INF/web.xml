@@ -4,13 +4,40 @@
         <servlet-name>UserRegisterServlet</servlet-name>
         <servlet-class>com.hostel.controller.UserRegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserLoginServlet</servlet-name>
+        <servlet-class>com.hostel.controller.UserLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>com.hostel.controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePasswordServlet</servlet-name>
+        <servlet-class>com.hostel.controller.UpdatePasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/UserRegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserLoginServlet</servlet-name>
+        <url-pattern>/UserLoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePasswordServlet</servlet-name>
+        <url-pattern>/UpdatePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

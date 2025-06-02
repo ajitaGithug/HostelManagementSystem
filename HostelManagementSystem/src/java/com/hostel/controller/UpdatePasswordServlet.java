@@ -10,18 +10,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
-
-import com.hostel.model.User;
-import com.hostel.model.DAO.UserDAO;
-
 import com.hostel.model.DBConnection;
+import java.sql.*;
 
 /**
  *
  * @author hazee
  */
-public class UserRegisterServlet extends HttpServlet {
+public class UpdatePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class UserRegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserRegisterServlet</title>");            
+            out.println("<title>Servlet UpdatePasswordServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserRegisterServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdatePasswordServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +57,7 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("register-staff.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -75,25 +71,24 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String userId = request.getParameter("userid");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String role = request.getParameter("role");
-        
-        UserDAO userDB = new UserDAO();
-        
-        User newUser = new User(userId, name, email, password, role);
-        
-        boolean success = userDB.registerUser(newUser);
-        
-        if (success) {
-            response.sendRedirect("register-success.jsp");
-        } else {
-            response.sendRedirect("register-fail.jsp");
+        String userid = request.getParameter("userid");
+        String newPassword = request.getParameter("newPassword");
+
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("UPDATE user SET password = ? WHERE userid = ?");
+            ps.setString(1, newPassword);
+            ps.setString(2, userid);
+
+            int updated = ps.executeUpdate();
+
+            if (updated > 0) {
+                response.getWriter().println("<script>alert('Password updated successfully!'); window.location='login.jsp';</script>");
+            } else {
+                response.getWriter().println("<script>alert('Password update failed!'); window.location='forgot-password.jsp';</script>");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        
     }
 
     /**

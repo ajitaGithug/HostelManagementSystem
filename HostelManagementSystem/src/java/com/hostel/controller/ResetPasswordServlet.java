@@ -6,22 +6,18 @@ package com.hostel.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
+import javax.servlet.*;
+import java.sql.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
-
-import com.hostel.model.User;
-import com.hostel.model.DAO.UserDAO;
-
 import com.hostel.model.DBConnection;
 
 /**
  *
  * @author hazee
  */
-public class UserRegisterServlet extends HttpServlet {
+public class ResetPasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class UserRegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserRegisterServlet</title>");            
+            out.println("<title>Servlet ResetPasswordServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserRegisterServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetPasswordServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +57,7 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("register-staff.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -75,25 +71,23 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String userId = request.getParameter("userid");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String role = request.getParameter("role");
-        
-        UserDAO userDB = new UserDAO();
-        
-        User newUser = new User(userId, name, email, password, role);
-        
-        boolean success = userDB.registerUser(newUser);
-        
-        if (success) {
-            response.sendRedirect("register-success.jsp");
-        } else {
-            response.sendRedirect("register-fail.jsp");
+        String userid = request.getParameter("userid");
+
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE userid = ?");
+            ps.setString(1, userid);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                request.setAttribute("userid", userid);
+                RequestDispatcher rd = request.getRequestDispatcher("reset-password.jsp");
+                rd.forward(request, response);
+            } else {
+                response.getWriter().println("<script>alert('User ID not found'); window.location='forgot-password.jsp';</script>");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        
     }
 
     /**

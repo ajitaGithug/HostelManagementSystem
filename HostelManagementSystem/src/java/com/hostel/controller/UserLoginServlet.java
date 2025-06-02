@@ -7,21 +7,19 @@ package com.hostel.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
 
 import com.hostel.model.User;
 import com.hostel.model.DAO.UserDAO;
-
-import com.hostel.model.DBConnection;
 
 /**
  *
  * @author hazee
  */
-public class UserRegisterServlet extends HttpServlet {
+public class UserLoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +30,7 @@ public class UserRegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,10 +39,10 @@ public class UserRegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserRegisterServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserRegisterServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +60,7 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("register-staff.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -76,24 +75,29 @@ public class UserRegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String userId = request.getParameter("userid");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
+        String userid = request.getParameter("userid");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
+
+        User user = UserDAO.login(userid, password); 
         
-        UserDAO userDB = new UserDAO();
-        
-        User newUser = new User(userId, name, email, password, role);
-        
-        boolean success = userDB.registerUser(newUser);
-        
-        if (success) {
-            response.sendRedirect("register-success.jsp");
+        if (user != null && user.getRole().equalsIgnoreCase(role)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+
+            if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+                    response.sendRedirect("admin-dashboard.jsp");
+            } else if ("STAFF".equalsIgnoreCase(user.getRole())) {
+                    response.sendRedirect("staff-dashboard.jsp");
+            } else if ("STUDENT".equalsIgnoreCase(user.getRole())) {
+                    response.sendRedirect("student-dashboard.jsp");
+            } else {
+                    response.sendRedirect("error.jsp");
+            }
         } else {
-            response.sendRedirect("register-fail.jsp");
-        }
-        
+            request.setAttribute("error", "Invalid email or password.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } 
     }
 
     /**
