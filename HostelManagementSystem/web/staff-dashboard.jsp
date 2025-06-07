@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -228,12 +231,12 @@
 
         <ul class="sidebar-menu">
             <li><a href="staff-dashboard.jsp" class="active">DASHBOARD</a></li>
-            <li><a href="profile.jsp">PROFILE</a></li>
-            <li><a href="manage-room.jsp">MANAGE ROOM</a></li>
-            <li><a href="booking.jsp">BOOKING</a></li>
-            <li><a href="manage-student.jsp">MANAGE STUDENT</a></li>
-            <li><a href="checkinout.jsp">CHECK IN/OUT</a></li>
-            <li><a href="maintenance.jsp">MAINTENANCE</a></li>
+            <li><a href="staff-profile.jsp">PROFILE</a></li>
+            <li><a href="staff-manage-room.jsp">MANAGE ROOM</a></li>
+            <li><a href="staff-booking.jsp">BOOKING</a></li>
+            <li><a href="staff-manage-student.jsp">MANAGE STUDENT</a></li>
+            <li><a href="staff-checkinout.jsp">CHECK IN/OUT</a></li>
+            <li><a href="staff-maintenance.jsp">MAINTENANCE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
         </ul>
@@ -244,8 +247,7 @@
             <h1 class="dashboard-title">STAFF DASHBOARD</h1>
             <div class="staff-info-container">
                 <div class="staff-info">
-                    <h3>AHMAD BIN ALI</h3>
-                    <p>KS2023001</p>
+                    
                 </div>
                 <div class="profile-pic">
                     <i class="fas fa-user-circle"></i>
@@ -285,29 +287,27 @@
 
     <script>
         function updateDateTime() {
-            try {
-                const now = new Date();
-                const day = String(now.getDate()).padStart(2, '0');
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const year = now.getFullYear();
-                const dateStr = `${day}/${month}/${year}`;
+            const now = new Date();
 
-                let hours = now.getHours();
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const ampm = hours >= 12 ? 'p.m' : 'a.m';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                const timeStr = `${hours}:${minutes} ${ampm}`;
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const months = ["January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"];
 
-                document.getElementById('currentDateTime').textContent = `${dateStr} ${timeStr}`;
-            } catch (error) {
-                console.error('Error updating date/time:', error);
-                document.getElementById('currentDateTime').textContent = 'Date/time unavailable';
-            }
+            const dayName = days[now.getDay()];
+            const month = months[now.getMonth()];
+            const date = now.getDate();
+            const year = now.getFullYear();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formatted = `${dayName}, ${date} ${month} ${year} - ${hours}:${minutes}:${seconds}`;
+            document.getElementById("currentDateTime").textContent = formatted;
         }
 
-        window.onload = updateDateTime;
-        setInterval(updateDateTime, 60000);
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // call once immediately
     </script>
 </body>
 </html>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.sql.SQLException;
 
 import com.hostel.model.User;
 import com.hostel.model.DAO.UserDAO;
@@ -24,47 +25,6 @@ import com.hostel.model.DBConnection;
 public class UserRegisterServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserRegisterServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserRegisterServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.sendRedirect("register-staff.jsp");
-    }
-
-    /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -76,25 +36,28 @@ public class UserRegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String userId = request.getParameter("userid");
+        String userid = request.getParameter("userid");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
         
+        User user = new User();
+        user.setUserID(userid);
+        user.setUserName(name);
+        user.setUserEmail(email);
+        user.setUserPassword(password);
+        user.setRole(role);
+        
+        try{
         UserDAO userDB = new UserDAO();
-        
-        User newUser = new User(userId, name, email, password, role);
-        
-        boolean success = userDB.registerUser(newUser);
-        
-        if (success) {
-            response.sendRedirect("register-success.jsp");
-        } else {
+        userDB.registerUser(user);
+        response.sendRedirect("register-success.jsp");
+        } catch(IOException e) {
             response.sendRedirect("register-fail.jsp");
         }
-        
-    }
+        }
+    
 
     /**
      * Returns a short description of the servlet.

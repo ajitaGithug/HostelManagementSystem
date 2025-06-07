@@ -1,4 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.hostel.model.Staff" %>
+<%
+    Staff staff = (Staff) request.getAttribute("staff");
+    if (staff == null) {
+        response.sendRedirect("login.jsp"); // Fallback if not logged in
+        return;
+    }
+    
+    String fullName = staff.getUserName(); // Assuming you have getFullName()
+    String staffID = staff.getUserID();    // Assuming userID is used as staffID
+    String photoPath = staff.getPhoto();   // Path to profile photo (can be null)
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -328,11 +340,15 @@
             <h1 class="dashboard-title">STAFF PROFILE</h1>
             <div class="staff-info-container">
                 <div class="staff-info">
-                    <h3>AHMAD BIN ALI</h3>
-                    <p>KS2023001</p>
+                    <h3><%= fullName %></h3>
+                    <p><%= staffID %></p>
                 </div>
                 <div class="profile-pic">
-                    <i class="fas fa-user-circle"></i>
+                <% if (photoPath != null && !photoPath.isEmpty()) { %>
+                <img src="<%= photoPath %>" alt="Profile" style="width:100%; height:100%; border-radius: 50%;">
+                <% } else { %>
+                <i class="fas fa-user-circle"></i>
+                <% } %>
                 </div>
             </div>
         </div>
@@ -349,31 +365,31 @@
             <div class="profile-info">
                 <h3 class="info-title">PERSONAL INFORMATION</h3>
 
-                <form id="profileForm">
+                <form id="profileForm" action="UpdateStaffProfileServlet" method="post" enctype="multipart/form-data">>
                     <div class="form-group">
                         <label for="staffId">STAFF ID</label>
-                        <input type="text" id="staffId" name="staffId" value="KS2023001" readonly>
+                        <input type="text" id="staffId" name="staffId" value="<%= staff.getID() %>" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="staffName">STAFF NAME</label>
-                        <input type="text" id="staffName" name="staffName" value="Ahmad bin Ali">
+                        <input type="text" id="staffName" name="staffName" value="<%= staff.getUsername() %>">
                     </div>
 
                     <div class="form-group">
                         <label for="staffEmail">STAFF EMAIL</label>
-                        <input type="email" id="staffEmail" name="staffEmail" value="ahmad.ali@kerawang.edu.my">
+                        <input type="email" id="staffEmail" name="staffEmail" value="<%= staff.getEmail() %>">
                     </div>
 
                     <div class="form-group">
                         <label for="phoneNumber">PHONE NUMBER</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" value="+60123456789">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" value="<%= staff.getContactNo() %>">
                     </div>
 
                     <div class="form-group">
                         <label for="password">PASSWORD</label>
                         <div class="password-container">
-                            <input type="password" id="password" name="password" value="********">
+                            <input type="password" id="password" name="password" value="<%= staff.getPassword() %>">
                             <i class="fas fa-eye" id="togglePassword"></i>
                         </div>
                     </div>

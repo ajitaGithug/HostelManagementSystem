@@ -1,23 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.hostel.model.DAO;
 
-/**
- *
- * @author hazee
- */
 import com.hostel.model.User;
 import com.hostel.model.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
+/**
+ * Data Access Object for User-related database operations.
+ */
 public class UserDAO {
 
-    
+    /**
+     * Registers a new user in the database.
+     * @param user The User object to register.
+     * @return true if registration is successful, false otherwise.
+     */
     public boolean registerUser(User user) {
         String sql = "INSERT INTO user (userID, userName, userEmail, userPassword, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -35,7 +35,11 @@ public class UserDAO {
         return false;
     }
 
-    
+    /**
+     * Retrieves a user by email.
+     * @param email The user's email.
+     * @return User object if found, null otherwise.
+     */
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM user WHERE userEmail = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -56,78 +60,77 @@ public class UserDAO {
         }
         return null;
     }
-    
+
+    /**
+     * Counts the number of users with a specific role.
+     * @param role The role to count.
+     * @return The count of users with that role.
+     */
     public int getRoleCount(String role) {
         String sql = "SELECT COUNT(*) FROM user WHERE role = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, role);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1); // return count
+                return rs.getInt(1);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
     }
-    
-    /*public String getNextUserId(String role) {
-    String prefix = role.equalsIgnoreCase("STUDENT") ? "STU" :
-                    role.equalsIgnoreCase("STAFF") ? "STA" :
-                    role.equalsIgnoreCase("ADMIN") ? "ADM" : "";
 
-    String query = "SELECT userID FROM user WHERE role = ? AND userID LIKE ? ORDER BY userID DESC LIMIT 1";
-
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(query)) {
-
-        stmt.setString(1, role);
-        stmt.setString(2, prefix + "%");
-
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            String lastId = rs.getString("userID"); // e.g., STU007
-            int number = Integer.parseInt(lastId.substring(3)); // get 007 as int
-            return prefix + String.format("%03d", number + 1);  // STU008
-        } else {
-            return prefix + "001"; // first ID if none exist
+    /**
+     * Authenticates a user by userID and password.
+     * @param userid The user's ID.
+     * @param password The user's password.
+     * @return User object if credentials are correct, null otherwise.
+     */
+    public User loginUser(String userid, String password) {
+        String sql = "SELECT * FROM user WHERE userID = ? AND userPassword = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userid);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getString("userID"),
+                    rs.getString("userName"),
+                    rs.getString("userEmail"),
+                    rs.getString("userPassword"),
+                    rs.getString("role")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
 
-    return prefix + "001"; // fallback
-}
-*/
-    public static User login(String userId, String password) {
-    String sql = "SELECT * FROM user WHERE userID = ? AND userPassword = ?";
-    
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        stmt.setString(1, userId);
-        stmt.setString(2, password);
-
-        ResultSet rs = stmt.executeQuery();
-        
-        if (rs.next()) {
-            return new User(
-                rs.getString("userID"),
-                rs.getString("userName"),
-                rs.getString("userEmail"),    
-                rs.getString("userPassword"),    
-                rs.getString("role")
-            );
+    // If you want a static login method, you can keep this, but it's redundant with loginUser()
+    /*
+    public static User loginp(String userId, String password) {
+        String sql = "SELECT * FROM user WHERE userID = ? AND userPassword = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getString("userID"),
+                    rs.getString("userName"),
+                    rs.getString("userEmail"),
+                    rs.getString("userPassword"),
+                    rs.getString("role")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
-
-    
+    */
 }

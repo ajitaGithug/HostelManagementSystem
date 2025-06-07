@@ -17,11 +17,12 @@ public class Staff extends User {
     public Staff () {}
     
     public Staff(String userID, String userName, String userEmail, String userPassword, String role,
-                 String position, String contactNo, int minMeritRequired) {
+                 String position, String contactNo, int minMeritRequired, String photo) {
         super(userID, userName, userEmail, userPassword, role);
         this.position = position;
         this.contactNo = contactNo;
         this.minMeritRequired = minMeritRequired;
+        this.photo = photo;
     }
 
     public void scanQRCode() {
@@ -50,5 +51,29 @@ public class Staff extends User {
 
     public void setMinMeritRequired(int minMeritRequired) {
         this.minMeritRequired = minMeritRequired;
+    }
+    
+    public String getPhoto() {
+        return photo;
+    }
+    
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
+    public String getID() {
+        return super.getUserID();
+    }
+
+    public String getUsername() {
+        return super.getUserName();
+    }
+
+    public String getEmail() {
+        return super.getUserEmail();
+    }
+
+    public String getPassword() {
+        return super.getUserPassword();
     }
 }

@@ -56,6 +56,11 @@
 <body>
     <div class="register-container">
         <h2>User Registration</h2>
+        <% if (request.getAttribute("error") != null) { %>
+            <div style="color:red; margin-bottom:15px;">
+                <%= request.getAttribute("error") %>
+            </div>
+        <% } %>
         <form action="UserRegisterServlet" method="post">
             <div class="form-group">
                 <label for="role">Register as:</label>

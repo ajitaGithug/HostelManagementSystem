@@ -180,13 +180,13 @@
             <h1>STAFF</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="dashboard.jsp">DASHBOARD</a></li>
-            <li><a href="profile.jsp">PROFILE</a></li>
-            <li><a href="manage-room.jsp">MANAGE ROOM</a></li>
-            <li><a href="booking.jsp" class="active">BOOKING</a></li>
-            <li><a href="manage-student.jsp">MANAGE STUDENT</a></li>
-            <li><a href="checkinout.jsp">CHECK IN/OUT</a></li>
-            <li><a href="maintenance.jsp">MAINTENANCE</a></li>
+            <li><a href="staff-dashboard.jsp">DASHBOARD</a></li>
+            <li><a href="staff-profile.jsp">PROFILE</a></li>
+            <li><a href="staff-manage-room.jsp">MANAGE ROOM</a></li>
+            <li><a href="taff-booking.jsp" class="active">BOOKING</a></li>
+            <li><a href="staff-manage-student.jsp">MANAGE STUDENT</a></li>
+            <li><a href="staff-checkinout.jsp">CHECK IN/OUT</a></li>
+            <li><a href="staff-maintenance.jsp">MAINTENANCE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
             

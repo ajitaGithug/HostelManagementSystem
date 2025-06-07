@@ -155,6 +155,9 @@
             <span data-role="STUDENT">STUDENT</span>
         </div>
         
+        
+        
+        
         <form action="UserLoginServlet" method="post">
             
             <input type="hidden" name="role" id="role" value="STAFF">

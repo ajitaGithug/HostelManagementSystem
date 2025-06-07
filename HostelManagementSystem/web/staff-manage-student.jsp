@@ -177,7 +177,9 @@
             <li><a href="profile.jsp">PROFILE</a></li>
             <li><a href="manage-room.jsp">MANAGE ROOM</a></li>
             <li><a href="booking.jsp">BOOKING</a></li>
-            <li><a href="manage-student.jsp" class="active">MANAGE STUDENT</a></li>
+            
+            <li><a href="manage-student" class="active">MANAGE STUDENT</a></li>
+            
             <li><a href="checkinout.jsp">CHECK IN/OUT</a></li>
             <li><a href="maintenance.jsp">MAINTENANCE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
@@ -209,51 +211,42 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+                
+                
                 <tbody>
-                    <tr>
-                        <tr>
-                    <td>1</td>
-                    <td>2023896847</td>
-                    <td>Maisarah binti Hasim</td>
-                    <td>040813028970</td>
-                    <td>CS230</td>
-                    <td>4</td>
-                    <td>019-8437685</td>
-                    <td class="status-approved">APPROVED</td>
-                    <td>
-                        <i class="fas fa-edit action-icon" title="Edit"></i>
-                        <i class="fas fa-trash action-icon" title="Delete" style="margin-left: 10px; color: var(--status-red);"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2023586497</td>
-                    <td>Amirah Hanis Binti Amir</td>
-                    <td>040411048220</td>
-                    <td>CS264</td>
-                    <td>3</td>
-                    <td>015-2326885</td>
-                    <td class="status-failed">FAILED</td>
-                    <td>
-                        <i class="fas fa-edit action-icon" title="Edit"></i>
-                        <i class="fas fa-trash action-icon" title="Delete" style="margin-left: 10px; color: var(--status-red);"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2021549865</td>
-                    <td>Aliya binti Amran</td>
-                    <td>020828118295</td>
-                    <td>CS270</td>
-                    <td>6</td>
-                    <td>011-3467654</td>
-                    <td class="status-failed">FAILED</td>
-                    <td>
-                        <i class="fas fa-edit action-icon" title="Edit"></i>
-                        <i class="fas fa-trash action-icon" title="Delete" style="margin-left: 10px; color: var(--status-red);"></i>
-                    </td>
-                </tr>
-                </tbody>
+<%
+    List<com.hostel.model.Student> studentList = (List<com.hostel.model.Student>) request.getAttribute("studentList");
+    int no = 1;
+    if (studentList != null && !studentList.isEmpty()) {
+        for (com.hostel.model.Student s : studentList) {
+%>
+    <tr>
+        <td><%= no++ %></td>
+        <td><%= s.getMatricNo() %></td>
+        <td><%= s.getUserName() %></td>
+        *<td><!-- If you have IC Number: --></td>*/
+        <td><%= s.getProgram() %></td>
+        <td><%= s.getYearOfStudy() %></td>
+        <td><%= s.getPhoneNo() %></td>
+        <td class="status-approved">APPROVED</td>
+        <td>
+            <i class="fas fa-edit action-icon" title="Edit"></i>
+            <i class="fas fa-trash action-icon" title="Delete" style="margin-left: 10px; color: var(--status-red);"></i>
+        </td>
+    </tr>
+<%
+        }
+    } else {
+%>
+    <tr>
+        <td colspan="9">No students found.</td>
+    </tr>
+<%
+    }
+%>
+</tbody>
+                
+                
             </table>
             <a href="staff-register.jsp" class="add-student-btn">ADD STUDENT</a>
         </div>
