@@ -20,6 +20,7 @@ import javax.servlet.http.*;
  *
  * @author hazee
  */
+
 public class CompleteProfileServlet extends HttpServlet {
 
     @Override
@@ -27,14 +28,15 @@ public class CompleteProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        Student student = (Student) session.getAttribute("student");
         
-        if (user == null || !"student".equals(user.getRole())) {
-            response.sendRedirect("login.jsp");
+        if (student == null ) {
+            response.sendRedirect("student-dashboard.jsp");
             return;
         }
         
         // Read form inputs
-        String matricNo = request.getParameter("matricNo");
+        //String matricNo = request.getParameter("matricNo");
         String phoneNo = request.getParameter("phoneNo");
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
@@ -46,14 +48,14 @@ public class CompleteProfileServlet extends HttpServlet {
         String emergencyContact = request.getParameter("emergencyContact");
         
         // create Student object from session + form
-        Student student = new Student();
+        //Student student = new Student();
         student.setUserID(user.getUserID());
         student.setUserName(user.getUserName());
         student.setUserEmail(user.getUserEmail());
         student.setUserPassword(user.getUserPassword());
         student.setRole("student");
 
-        student.setMatricNo(matricNo);
+        //student.setMatricNo(matricNo);
         student.setPhoneNo(phoneNo);
         student.setAddress(address);
         student.setGender(gender);

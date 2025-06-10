@@ -4,6 +4,7 @@
  */
 package com.hostel.controller;
 
+import com.hostel.model.DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.*;
@@ -69,26 +70,25 @@ public class ResetPasswordServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+    
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userid = request.getParameter("userid");
 
-        try (Connection conn = DBConnection.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE userid = ?");
-            ps.setString(1, userid);
-            ResultSet rs = ps.executeQuery();
+        String userID = request.getParameter("userID");
+        String newPassword = request.getParameter("newPassword");
 
-            if (rs.next()) {
-                request.setAttribute("userid", userid);
-                RequestDispatcher rd = request.getRequestDispatcher("reset-password.jsp");
-                rd.forward(request, response);
-            } else {
-                response.getWriter().println("<script>alert('User ID not found'); window.location='forgot-password.jsp';</script>");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        UserDAO dao = new UserDAO();
+        boolean updated = dao.updatePassword(userID, newPassword);
+
+        if (updated) {
+            response.sendRedirect("login.jsp?reset=success");
+        } else {
+            response.getWriter().write("Password reset failed.");
         }
     }
+
+
 
     /**
      * Returns a short description of the servlet.

@@ -30,8 +30,8 @@ public class StaffProfileServlet extends HttpServlet {
 
 
         try (Connection conn = DBConnection.getConnection()) {
-            StaffDAO staffDAO = new StaffDAO(conn);
-            Staff staff = staffDAO.getStaffByID(staffID);
+            StaffDAO staffDAO = new StaffDAO();
+            Staff staff = staffDAO.getStaffByUserID(staffID);
             request.setAttribute("staff", staff);
             request.getRequestDispatcher("staff-profile.jsp").forward(request, response);
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class StaffProfileServlet extends HttpServlet {
         staff.setUserPassword(request.getParameter("userPassword")); // Ideally hash this!
 
         try (Connection conn = DBConnection.getConnection()) {
-            StaffDAO staffDAO = new StaffDAO(conn);
+            StaffDAO staffDAO = new StaffDAO();
             boolean updated = staffDAO.updateStaffProfile(staff);
             if (updated) {
                 request.setAttribute("message", "Profile updated successfully!");

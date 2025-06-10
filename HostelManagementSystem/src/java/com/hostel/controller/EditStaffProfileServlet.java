@@ -48,7 +48,7 @@ public class EditStaffProfileServlet extends HttpServlet {
 
         // Update in DB using DAO
         try (Connection conn = DBConnection.getConnection()) {
-            StaffDAO dao = new StaffDAO(conn);
+            StaffDAO dao = new StaffDAO();
             dao.updateStaffProfile(staff);
             response.sendRedirect("staff-profile.jsp?success=true");
         } catch (Exception e) {

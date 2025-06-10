@@ -5,6 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.hostel.model.User" %>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp"); // Redirect if session is invalid
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +22,7 @@
     <body>
         <h1>Hello World!</h1>
         <form action="CompleteProfileServlet" method="post">
-    Matric No: <input type="text" name="matricNo" required><br>
+    
     Phone No: <input type="text" name="phoneNo" required><br>
     Address: <input type="text" name="address" required><br>
     Gender: 

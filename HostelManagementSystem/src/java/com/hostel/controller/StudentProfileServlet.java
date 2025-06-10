@@ -26,7 +26,7 @@ public class StudentProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Get current student from session
-        Student student = (Student) request.getSession().getAttribute("currentUser");
+        Student student = (Student) request.getSession().getAttribute("student");
         if (student == null) {
        // Redirect to login or error page
        response.sendRedirect("login.jsp");
@@ -57,7 +57,7 @@ public class StudentProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Only allow first-time profile completion
-        Student student = (Student) request.getSession().getAttribute("currentUser");
+        Student student = (Student) request.getSession().getAttribute("student");
 
         // Get form data
         String phoneNo = request.getParameter("phoneNo");

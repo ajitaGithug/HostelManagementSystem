@@ -1,4 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.hostel.model.User"%>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp"); // Redirect if session is invalid
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -173,15 +181,15 @@
             <h1>STAFF</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="dashboard.jsp">DASHBOARD</a></li>
-            <li><a href="profile.jsp">PROFILE</a></li>
-            <li><a href="manage-room.jsp">MANAGE ROOM</a></li>
-            <li><a href="booking.jsp">BOOKING</a></li>
+            <li><a href="staff-dashboard.jsp">DASHBOARD</a></li>
+            <li><a href="staff-profile.jsp">PROFILE</a></li>
+            <li><a href="staff-manage-room.jsp">MANAGE ROOM</a></li>
+            <li><a href="staff-booking.jsp">BOOKING</a></li>
             
-            <li><a href="manage-student" class="active">MANAGE STUDENT</a></li>
+            <li><a href="staff-manage-student" class="active">MANAGE STUDENT</a></li>
             
-            <li><a href="checkinout.jsp">CHECK IN/OUT</a></li>
-            <li><a href="maintenance.jsp">MAINTENANCE</a></li>
+            <li><a href="staff-checkinout.jsp">CHECK IN/OUT</a></li>
+            <li><a href="staff-maintenance.jsp">MAINTENANCE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
             
@@ -214,20 +222,20 @@
                 
                 
                 <tbody>
-<%
+<%/*
     List<com.hostel.model.Student> studentList = (List<com.hostel.model.Student>) request.getAttribute("studentList");
     int no = 1;
     if (studentList != null && !studentList.isEmpty()) {
         for (com.hostel.model.Student s : studentList) {
-%>
+*/%>
     <tr>
-        <td><%= no++ %></td>
-        <td><%= s.getMatricNo() %></td>
-        <td><%= s.getUserName() %></td>
+        <td><%=// no++ %></td>
+        <td><%=// s.getMatricNo() %></td>
+        <td><%=// s.getUserName() %></td>
         *<td><!-- If you have IC Number: --></td>*/
-        <td><%= s.getProgram() %></td>
-        <td><%= s.getYearOfStudy() %></td>
-        <td><%= s.getPhoneNo() %></td>
+        <td><%=// s.getProgram() %></td>
+        <td><%=// s.getYearOfStudy() %></td>
+        <td><%=// s.getPhoneNo() %></td>
         <td class="status-approved">APPROVED</td>
         <td>
             <i class="fas fa-edit action-icon" title="Edit"></i>
@@ -235,14 +243,14 @@
         </td>
     </tr>
 <%
-        }
-    } else {
+        //}
+    //} else {
 %>
     <tr>
         <td colspan="9">No students found.</td>
     </tr>
 <%
-    }
+    //}
 %>
 </tbody>
                 

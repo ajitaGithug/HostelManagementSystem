@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page import="com.hostel.model.User"%>
+<%@ page import="com.hostel.model.Staff"%>
+<%
+    User user = (User) session.getAttribute("user");
+    Staff staff = (Staff) session.getAttribute("staff");
+    if (user == null || staff == null) {
+        response.sendRedirect("login.jsp"); // Redirect if session is invalid
+        return;
+    }
+%>
 
 
 <!DOCTYPE html>
@@ -231,12 +240,13 @@
 
         <ul class="sidebar-menu">
             <li><a href="staff-dashboard.jsp" class="active">DASHBOARD</a></li>
-            <li><a href="staff-profile.jsp">PROFILE</a></li>
+            <li><a href="staff-completeProfile.jsp">PROFILE</a></li>
             <li><a href="staff-manage-room.jsp">MANAGE ROOM</a></li>
             <li><a href="staff-booking.jsp">BOOKING</a></li>
             <li><a href="staff-manage-student.jsp">MANAGE STUDENT</a></li>
             <li><a href="staff-checkinout.jsp">CHECK IN/OUT</a></li>
             <li><a href="staff-maintenance.jsp">MAINTENANCE</a></li>
+            <li><a href="add_room.jsp">ADD ROOM</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
         </ul>
@@ -247,7 +257,16 @@
             <h1 class="dashboard-title">STAFF DASHBOARD</h1>
             <div class="staff-info-container">
                 <div class="staff-info">
-                    
+                    <h3>
+                        <%-- Example: --%>
+                        <%= user.getUserName() %>
+                    </h3>
+                    <p>
+                        <%= user.getUserID() %>
+                    </p>
+                    <p>
+                        <%= staff.getPosition()%>
+                    </p>
                 </div>
                 <div class="profile-pic">
                     <i class="fas fa-user-circle"></i>

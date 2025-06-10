@@ -117,5 +117,68 @@ public class StudentDAO {
         }
     }
     
+    public boolean registerStudent(Student s) {
+        boolean success = false;
+        try (Connection con = DBConnection.getConnection()) {
+            
+            // Insert into User table
+            String sql1 = "INSERT INTO user (userID, userName, userEmail, userPassword, role) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps1 = con.prepareStatement(sql1);
+            ps1.setString(1, s.getUserID());
+            ps1.setString(2, s.getUserName());
+            ps1.setString(3, s.getUserEmail());
+            ps1.setString(4, s.getUserPassword());
+            ps1.setString(5, "student");
+            ps1.executeUpdate();
+
+            // Insert into Student table
+            String sql2 = "INSERT INTO student (userID, matricNo, phoneNo, address, gender, program, yearOfStudy, internship, guardianName, guardianContact, emergencyContact, roomID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps2 = con.prepareStatement(sql2);
+            ps2.setString(1, s.getUserID());
+            ps2.setString(2, s.getMatricNo());
+            ps2.setString(3, s.getPhoneNo());
+            ps2.setString(4, s.getAddress());
+            ps2.setString(5, s.getGender());
+            ps2.setString(6, s.getProgram());
+            ps2.setInt(7, s.getYearOfStudy());
+            ps2.setBoolean(8, s.isInternship());
+            ps2.setString(9, s.getGuardianName());
+            ps2.setString(10, s.getGuardianContact());
+            ps2.setString(11, s.getEmergencyContact());
+            ps2.setString(12, s.getRoomID());
+            ps2.executeUpdate();
+            
+            
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+    
+    public void insertStudent(Student student) {
+    try (Connection conn = DBConnection.getConnection()) {
+        String sql = "INSERT INTO Student (userID, matricNo, phoneNo, address, gender, program, yearOfStudy, internship, guardianName, guardianContact, emergencyContact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, student.getUserID());
+        stmt.setString(2, student.getMatricNo());
+        stmt.setString(3, student.getPhoneNo());
+        stmt.setString(4, student.getAddress());
+        stmt.setString(5, student.getGender());
+        stmt.setString(6, student.getProgram());
+        stmt.setInt(7, student.getYearOfStudy());
+        stmt.setBoolean(8, student.isInternship());
+        stmt.setString(9, student.getGuardianName());
+        stmt.setString(10, student.getGuardianContact());
+        stmt.setString(11, student.getEmergencyContact());
+
+        stmt.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+    
+    
 
 }

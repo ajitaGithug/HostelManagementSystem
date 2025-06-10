@@ -25,16 +25,40 @@
         <servlet-class>com.hostel.controller.EditStaffProfileServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManageStudentServlet</servlet-name>
-        <servlet-class>com.hostel.controller.ManageStudentServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>StudentProfileServlet</servlet-name>
         <servlet-class>com.hostel.controller.StudentProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CompleteProfileServlet</servlet-name>
         <servlet-class>com.hostel.controller.CompleteProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffCompleteServlet</servlet-name>
+        <servlet-class>com.hostel.controller.StaffCompleteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>com.hostel.controller.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterStudentServlet</servlet-name>
+        <servlet-class>com.hostel.controller.RegisterStudentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <servlet-class>com.hostel.controller.AddRoomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompleteStudentProfileServlet</servlet-name>
+        <servlet-class>com.hostel.controller.CompleteStudentProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompleteStaffProfileServlet</servlet-name>
+        <servlet-class>com.hostel.controller.CompleteStaffProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompleteAdminProfileServlet</servlet-name>
+        <servlet-class>com.hostel.controller.CompleteAdminProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
@@ -61,16 +85,40 @@
         <url-pattern>/EditStaffProfileServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManageStudentServlet</servlet-name>
-        <url-pattern>/ManageStudentServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>StudentProfileServlet</servlet-name>
         <url-pattern>/StudentProfileServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CompleteProfileServlet</servlet-name>
         <url-pattern>/CompleteProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffCompleteServlet</servlet-name>
+        <url-pattern>/StaffCompleteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/ForgotPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterStudentServlet</servlet-name>
+        <url-pattern>/RegisterStudentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <url-pattern>/AddRoomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteStudentProfileServlet</servlet-name>
+        <url-pattern>/CompleteStudentProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteStaffProfileServlet</servlet-name>
+        <url-pattern>/CompleteStaffProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteAdminProfileServlet</servlet-name>
+        <url-pattern>/CompleteAdminProfileServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

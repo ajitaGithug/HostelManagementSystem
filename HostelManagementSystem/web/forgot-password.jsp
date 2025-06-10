@@ -13,10 +13,14 @@
 </head>
 <body>
     <h2>Forgot Password</h2>
-    <form action="ResetPasswordServlet" method="post">
-        <label for="userid">Enter your User ID:</label>
-        <input type="text" name="userid" required>
-        <button type="submit">Reset Password</button>
-    </form>
+    <form action="ForgotPasswordServlet" method="post">
+    <label for="userID">Enter your User ID:</label>
+    <input type="text" name="userID" required>
+    <button type="submit">Send Reset Link</button>
+
+    <p style="color:green">${msg}</p>
+    <p style="color:red">${error}</p>
+</form>
+
 </body>
 </html>

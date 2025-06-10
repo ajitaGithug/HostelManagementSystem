@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.hostel.model.User"%>
-<%@ page import="com.hostel.model.Admin"%>
+<%@ page import="com.hostel.model.Student" %>
 <%
-    User user = (User) session.getAttribute("user");
-    Admin admin = (Admin) session.getAttribute("admin");
-    if (user == null || admin == null) {
+    Student student = (Student) session.getAttribute("student");
+    if (student == null) {
         response.sendRedirect("login.jsp"); // Redirect if session is invalid
         return;
     }
 %>
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard - Kerawang College</title>
+    <title>Student Dashboard - Kerawang College</title>
     <style>
         :root {
             --primary-purple: #6a3093;
@@ -43,10 +43,9 @@
             background-color: var(--white);
             padding: 30px 20px;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            /* Add Flexbox properties to center content vertically */
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centers items horizontally */
+            align-items: center;
         }
 
         .sidebar-header {
@@ -54,24 +53,22 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 0.5px solid #eee;
-            width: 100%; /* Ensure it takes full width of the sidebar */
-            display: flex; /* Use flexbox for centering image within header */
-            justify-content: center; /* Center image horizontally */
-            align-items: center; /* Center image vertically if needed */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .sidebar-header img {
             width: 125px;
-            height: auto; /* Maintain aspect ratio */
-            /* Removed display: block; as flexbox will handle centering */
-            /* You can add margin-bottom if you want space below the logo */
+            height: auto;
         }
 
         .sidebar-menu {
             list-style: none;
             padding: 0;
             margin: 0;
-            width: 100%; /* Ensure the menu takes full width */
+            width: 100%;
         }
 
         .sidebar-menu li {
@@ -98,7 +95,7 @@
         }
 
         .main-content {
-            padding: 0; /* remove padding so header can go edge-to-edge */
+            padding: 0;
         }
 
         .header {
@@ -117,11 +114,11 @@
             color: var(--white);
             font-weight: 600;
             margin: 0;
-            flex-grow: 1; /* Allows the title to take available space */
-            text-align: left; /* Keep title to the left */
+            flex-grow: 1;
+            text-align: left;
         }
 
-        .staff-info-container {
+        .student-info-container {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -132,13 +129,13 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .staff-info h3 {
+        .student-info h3 {
             font-size: 16px;
             font-weight: 600;
             margin: 0;
         }
 
-        .staff-info p {
+        .student-info p {
             font-size: 14px;
             margin: 3px 0 0;
             color: var(--light-purple);
@@ -157,10 +154,9 @@
             border: 2px solid var(--white);
         }
 
-
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin: 30px;
         }
@@ -239,13 +235,12 @@
         </div>
 
         <ul class="sidebar-menu">
-            <li><a href="admin-dashboard.jsp" class="active">DASHBOARD</a></li>
-            <li><a href="admin-profile.jsp">PROFILE</a></li>
-            <li><a href="admin-manage-room.jsp">MANAGE ROOM</a></li>
-            <li><a href="admin-booking.jsp">BOOKING</a></li>
-            <li><a href="admin-manage-student.jsp">MANAGE STUDENT</a></li>
-            <li><a href="admin-checkinout.jsp">CHECK IN/OUT</a></li>
-            <li><a href="admin-maintenance.jsp">MAINTENANCE</a></li>
+            <li><a href="student-dashboard.jsp" class="active">DASHBOARD</a></li>
+            <li><a href="student-completeProfile.jsp">PROFILE</a></li>
+            <li><a href="student-booking.jsp">MY BOOKING</a></li>
+            <li><a href="student-manage-room">MY ROOM</a></li>
+            <li><a href="student-payment.jsp">PAYMENT</a></li>
+            <li><a href="student-invoice.jsp">INVOICE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
         </ul>
@@ -253,20 +248,22 @@
 
     <div class="main-content">
         <div class="header">
-            <h1 class="dashboard-title">ADMIN DASHBOARD</h1>
-            <div class="staff-info-container">
-                <div class="admin-info">
-                    <!-- You can display admin name, userID, etc. here -->
+            <h1 class="dashboard-title">STUDENT BOOKING</h1>
+            <div class="student-info-container">
+                <div class="student-info">
+                    <!-- You can display student name, userID, etc. here -->
                     <h3>
                         <%-- Example: --%>
-                        <%= user.getUserName() %>
+                        
+                            <%= student.getUserName() %>
+                        
                     </h3>
                     <p>
-                        <%= user.getUserID() %>
+                        <%= student.getUserID() %>
                     </p>
                     <p>
-                        <%= admin.getPosition() %>
-                    </p>
+                        <%= student.getProgram() %>
+                    </p>    
                 </div>
                 <div class="profile-pic">
                     <i class="fas fa-user-circle"></i>
@@ -276,20 +273,16 @@
 
         <div class="stats-container">
             <div class="stat-card">
-                <h2>180</h2>
-                <p>TOTAL ROOM</p>
+                <h2>1</h2>
+                <p>MY ROOM</p>
             </div>
             <div class="stat-card">
-                <h2>95</h2>
-                <p>ROOM ASSIGNED</p>
+                <h2>2</h2>
+                <p>MY BOOKINGS</p>
             </div>
             <div class="stat-card">
-                <h2>85</h2>
-                <p>ROOM AVAILABLE</p>
-            </div>
-            <div class="stat-card">
-                <h2>3</h2>
-                <p>MAINTENANCE</p>
+                <h2>0</h2>
+                <p>PENDING PAYMENTS</p>
             </div>
         </div>
 
@@ -326,7 +319,7 @@
         }
 
         setInterval(updateDateTime, 1000);
-        updateDateTime(); // call once immediately
+        updateDateTime();
     </script>
 </body>
 </html>

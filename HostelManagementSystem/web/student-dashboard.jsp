@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-    com.hostel.model.User user = (com.hostel.model.User) session.getAttribute("user");
+<%@ page import="com.hostel.model.User"%>
+<%@ page import="com.hostel.model.Student"%>
+
+<%  
+    User user = (User) session.getAttribute("user");
+    Student student = (Student) session.getAttribute("student");
+    
+    if (user == null || student == null) {
+        response.sendRedirect("login.jsp"); // Redirect if session is invalid
+        return;
+    }
 %>
+
+
 
 
 <!DOCTYPE html>
@@ -229,9 +240,10 @@
 
         <ul class="sidebar-menu">
             <li><a href="student-dashboard.jsp" class="active">DASHBOARD</a></li>
+            <li><a href="student-completeProfile.jsp">COMPLETE PROFILE</a></li>
             <li><a href="student-profile.jsp">PROFILE</a></li>
             <li><a href="student-booking.jsp">MY BOOKING</a></li>
-            <li><a href="student-manage-room">MY ROOM</a></li>
+            <li><a href="student-manage-room.jsp">MY ROOM</a></li>
             <li><a href="student-payment.jsp">PAYMENT</a></li>
             <li><a href="student-invoice.jsp">INVOICE</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
@@ -244,7 +256,7 @@
             <h1 class="dashboard-title">STUDENT DASHBOARD</h1>
             <div class="student-info-container">
                 <div class="student-info">
-                    <!-- You can display student name, matric no, etc. here -->
+                    <!-- You can display student name, userID, etc. here -->
                     <h3>
                         <%-- Example: --%>
                         
@@ -252,10 +264,11 @@
                         
                     </h3>
                     <p>
-                        
-                             <%= user.getUserID() %>
-                        
+                        <%= user.getUserID() %>
                     </p>
+                    <p>
+                        <%= student.getProgram() %>
+                    </p>    
                 </div>
                 <div class="profile-pic">
                     <i class="fas fa-user-circle"></i>

@@ -1,12 +1,21 @@
 package com.hostel.controller;
 
+import com.hostel.model.Admin;
+import com.hostel.model.Staff;
+import com.hostel.model.Student;
+import com.hostel.model.User;
+
 // Import necessary classes
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import com.hostel.model.User;
-import com.hostel.model.DAO.UserDAO; // Make sure this path matches your project structure
+import com.hostel.model.DAO.UserDAO;
+import com.hostel.model.DAO.AdminDAO;
+import com.hostel.model.DAO.StaffDAO;
+import com.hostel.model.DAO.StudentDAO; // Make sure this path matches your project structure
+
 
 /**
  * Servlet for handling user login.
@@ -47,19 +56,52 @@ public class UserLoginServlet extends HttpServlet {
             // 4. Store user in session
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+            
 
             // 5. Redirect to dashboard based on role
             String userRole = user.getRole().toLowerCase();
             switch (userRole) {
                 case "admin":
-                    response.sendRedirect("admin-dashboard.jsp");
+                    AdminDAO adminDAO = new AdminDAO();
+                    Admin admin = adminDAO.getAdminByUserID(user.getUserID());
+                    
+                    if (admin == null) {
+                        session.setAttribute("user", user);
+                        response.sendRedirect("admin-complete-profile.jsp");
+                    } else {
+                        session.setAttribute("admin", admin);
+                        response.sendRedirect("admin-dashboard.jsp");
+                    }
                     break;
+                    
                 case "staff":
+                    StaffDAO staffDAO = new StaffDAO();
+                    Staff staff = staffDAO.getStaffByUserID(user.getUserID());
+                    
+                    if(staff == null) {
+                        session.setAttribute("user", user);
+                        response.sendRedirect("staff-complete-profile.jsp");
+                    } else {
+                    session.setAttribute("staff", staff);
                     response.sendRedirect("staff-dashboard.jsp");
+                    }
                     break;
+                    
                 case "student":
-                    response.sendRedirect("student-dashboard.jsp");
+                    StudentDAO studentDAO = new StudentDAO();
+                    Student student = studentDAO.getStudentByUserID(user.getUserID());
+                    
+                    if (student == null) {
+                    
+                    // Student exist in user table but not in student table
+                    session.setAttribute("user", user);
+                    response.sendRedirect("student-complete-profile.jsp");
+                    } else {
+                        session.setAttribute("student", student);
+                        response.sendRedirect("student-dashboard.jsp");
+                    }
                     break;
+                    
                 default:
                     response.sendRedirect("error.jsp");
             }

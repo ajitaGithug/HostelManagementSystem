@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.hostel.model.Student" %>
 <%
-    com.hostel.model.User user = (com.hostel.model.User) session.getAttribute("user");
+    Student student = (Student) session.getAttribute("student");
+    if (student == null) {
+        response.sendRedirect("login.jsp"); // Redirect if session is invalid
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -42,14 +47,6 @@
 </head>
 <body>
 
-<%
-    Student student = (Student) session.getAttribute("User");
-    if (student == null) {
-%>
-    <h2>You are not logged in. Please <a href="login.jsp">login</a>.</h2>
-<%
-    } else {
-%>
     <div class="profile-container">
         <h1>My Profile</h1>
         <div class="profile-row">
@@ -107,9 +104,7 @@
         </div>
         
     </div>
-<%
-    }
-%>
+
 
 </body>
 </html>

@@ -10,16 +10,16 @@ package com.hostel.model;
  */
 public class Room {
     private String roomID;
-    private String roomType; 
+    private String blockName; 
     private String status;   
     private int capacity;
     private int currentOccupancy;
 
     public Room() {}
 
-    public Room(String roomID, String roomType, String status, int capacity, int currentOccupancy) {
+    public Room(String roomID, String blockName, String status, int capacity, int currentOccupancy) {
         this.roomID = roomID;
-        this.roomType = roomType;
+        this.blockName = blockName;
         this.status = status;
         this.capacity = capacity;
         this.currentOccupancy = currentOccupancy;
@@ -33,12 +33,12 @@ public class Room {
         this.roomID = roomID;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public String getBlockName() {
+        return blockName;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
+    public void setBlockName(String roomType) {
+        this.blockName = roomType;
     }
 
     public String getStatus() {

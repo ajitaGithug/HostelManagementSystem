@@ -21,14 +21,38 @@ public class UserDAO {
     public boolean registerUser(User user) {
         String sql = "INSERT INTO user (userID, userName, userEmail, userPassword, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            // insert into user table
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getUserID());
             stmt.setString(2, user.getUserName());
             stmt.setString(3, user.getUserEmail());
             stmt.setString(4, user.getUserPassword());
             stmt.setString(5, user.getRole());
             int result = stmt.executeUpdate();
-            return result > 0;
+            
+            if( result > 0) {
+                String roleInsertSql = null;
+                switch(user.getRole().toLowerCase()){
+                    case "admin":
+                        roleInsertSql = "INSERT INTO admin(userID) VALUES (?)";
+                        break;
+                    case "staff":
+                        roleInsertSql = "INSERT INTO staff(userID) VALUES (?)";
+                        break;   
+                    case "student":
+                        roleInsertSql = "INSERT INTO student(userID) VALUES (?)";
+                        break;
+                    default:
+                        return false;
+                }
+                
+                PreparedStatement rolePs = conn.prepareStatement(roleInsertSql);
+                rolePs.setString(1, user.getUserID());
+                rolePs.executeUpdate();
+                return true;
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,29 +132,42 @@ public class UserDAO {
         }
         return null;
     }
-
-    // If you want a static login method, you can keep this, but it's redundant with loginUser()
-    /*
-    public static User loginp(String userId, String password) {
-        String sql = "SELECT * FROM user WHERE userID = ? AND userPassword = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, userId);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new User(
-                    rs.getString("userID"),
-                    rs.getString("userName"),
-                    rs.getString("userEmail"),
-                    rs.getString("userPassword"),
-                    rs.getString("role")
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    
+    public User getUserByUserID(String userID) {
+    String sql = "SELECT * FROM user WHERE userID = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, userID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return new User(
+                rs.getString("userID"),
+                rs.getString("userName"),
+                rs.getString("userEmail"),
+                rs.getString("userPassword"),
+                rs.getString("role")
+            );
         }
-        return null;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-    */
+    return null;
+}
+    
+    public boolean updatePassword(String userID, String newPassword) {
+    String sql = "UPDATE user SET userPassword = ? WHERE userID = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, newPassword); // hash this in real systems
+        stmt.setString(2, userID);
+        return stmt.executeUpdate() > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+    
+    
+    
 }
