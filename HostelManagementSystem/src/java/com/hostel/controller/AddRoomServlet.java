@@ -23,12 +23,14 @@ public class AddRoomServlet extends HttpServlet {
 
         if (success) {
             request.setAttribute("message", "Room registered successfully.");
+            //response.sendRedirect("staff-dashboard.jsp");
             
         } else {
             request.setAttribute("message", "Room registration failed.");
+            //response.sendRedirect("error.jsp");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("add_room.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("staff-add-room.jsp");
         rd.forward(request, response);
     }
 }

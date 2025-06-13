@@ -240,12 +240,13 @@
 
         <ul class="sidebar-menu">
             <li><a href="student-dashboard.jsp" class="active">DASHBOARD</a></li>
-            <li><a href="student-completeProfile.jsp">COMPLETE PROFILE</a></li>
+            <li><a href="student-complete-profile.jsp">COMPLETE PROFILE</a></li>
             <li><a href="student-profile.jsp">PROFILE</a></li>
             <li><a href="student-booking.jsp">MY BOOKING</a></li>
             <li><a href="student-manage-room.jsp">MY ROOM</a></li>
             <li><a href="student-payment.jsp">PAYMENT</a></li>
             <li><a href="student-invoice.jsp">INVOICE</a></li>
+            <li><a href="book_room.jsp">bookroom</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
         </ul>

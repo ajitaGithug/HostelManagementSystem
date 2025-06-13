@@ -25,4 +25,35 @@ public class RoomDAO {
 
         return result;
     }
+    public static void incrementRoomOccupancy(String roomID) {
+    String sql = "UPDATE Room SET currentOccupancy = currentOccupancy + 1 WHERE roomID = ?";
+    
+    try (Connection con = DBConnection.getConnection()) {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, roomID);
+        int rowsUpdated = ps.executeUpdate();
+        System.out.println("Occupancy updated for roomID: " + roomID + " → Rows affected: " + rowsUpdated);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    public static boolean isRoomAvailable(String roomID) {
+    String sql = "SELECT capacity, currentOccupancy FROM Room WHERE roomID = ?";
+    
+    try (Connection con = DBConnection.getConnection()) {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, roomID);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int capacity = rs.getInt("capacity");
+            int current = rs.getInt("currentOccupancy");
+            return current < capacity;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+
 }

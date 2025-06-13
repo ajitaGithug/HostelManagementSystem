@@ -66,7 +66,7 @@
     </div>
 
     <div class="main-content">
-        <a href="manage-room.jsp" class="back-link"><i class="fas fa-arrow-left"></i> Back to Room List</a>
+        <a href="staff-manage-room.jsp" class="back-link"><i class="fas fa-arrow-left"></i> Back to Room List</a>
 
         <div class="header">
             <h2>Add New Room</h2>

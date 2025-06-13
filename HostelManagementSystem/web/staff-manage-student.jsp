@@ -1,8 +1,11 @@
+<%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.hostel.model.User"%>
+<%@ page import="com.hostel.model.Staff"%>
 <%
     User user = (User) session.getAttribute("user");
-    if (user == null) {
+    Staff staff = (Staff) session.getAttribute("staff");
+    if (user == null || staff == null) {
         response.sendRedirect("login.jsp"); // Redirect if session is invalid
         return;
     }
@@ -222,20 +225,20 @@
                 
                 
                 <tbody>
-<%/*
+<%
     List<com.hostel.model.Student> studentList = (List<com.hostel.model.Student>) request.getAttribute("studentList");
     int no = 1;
     if (studentList != null && !studentList.isEmpty()) {
         for (com.hostel.model.Student s : studentList) {
-*/%>
+%>
     <tr>
-        <td><%=// no++ %></td>
-        <td><%=// s.getMatricNo() %></td>
-        <td><%=// s.getUserName() %></td>
+        <td><%= no++ %></td>
+        <td><%= s.getMatricNo() %></td>
+        <td><%= s.getUserName() %></td>
         *<td><!-- If you have IC Number: --></td>*/
-        <td><%=// s.getProgram() %></td>
-        <td><%=// s.getYearOfStudy() %></td>
-        <td><%=// s.getPhoneNo() %></td>
+        <td><%= s.getProgram() %></td>
+        <td><%= s.getYearOfStudy() %></td>
+        <td><%= s.getPhoneNo() %></td>
         <td class="status-approved">APPROVED</td>
         <td>
             <i class="fas fa-edit action-icon" title="Edit"></i>
@@ -243,20 +246,20 @@
         </td>
     </tr>
 <%
-        //}
-    //} else {
+        }
+    } else {
 %>
     <tr>
         <td colspan="9">No students found.</td>
     </tr>
 <%
-    //}
+    }
 %>
 </tbody>
                 
                 
             </table>
-            <a href="staff-register.jsp" class="add-student-btn">ADD STUDENT</a>
+            <a href="staff-register-student.jsp" class="add-student-btn">ADD STUDENT</a>
         </div>
     </div>
 </div>

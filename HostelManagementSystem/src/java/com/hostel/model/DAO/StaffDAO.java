@@ -150,5 +150,20 @@ public class StaffDAO {
         return staff;
     }
     
+    public static int getLatestMinMeritRequired() {
+    String sql = "SELECT minMeritRequired FROM staff ORDER BY userID DESC FETCH FIRST 1 ROWS ONLY";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+            return rs.getInt("minMeritRequired");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0; // default if none found
+}
+
+    
 
 }

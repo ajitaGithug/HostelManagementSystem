@@ -240,13 +240,13 @@
 
         <ul class="sidebar-menu">
             <li><a href="staff-dashboard.jsp" class="active">DASHBOARD</a></li>
-            <li><a href="staff-completeProfile.jsp">PROFILE</a></li>
+            <li><a href="staff-profile.jsp">PROFILE</a></li>
             <li><a href="staff-manage-room.jsp">MANAGE ROOM</a></li>
             <li><a href="staff-booking.jsp">BOOKING</a></li>
             <li><a href="staff-manage-student.jsp">MANAGE STUDENT</a></li>
             <li><a href="staff-checkinout.jsp">CHECK IN/OUT</a></li>
             <li><a href="staff-maintenance.jsp">MAINTENANCE</a></li>
-            <li><a href="add_room.jsp">ADD ROOM</a></li>
+            <li><a href="staff-add-room.jsp">ADD ROOM</a></li>
             <li><a href="logout.jsp">SIGN-OUT</a></li>
             <li><a href="info.jsp">INFO</a></li>
         </ul>

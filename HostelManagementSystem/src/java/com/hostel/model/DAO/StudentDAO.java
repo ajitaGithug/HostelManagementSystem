@@ -177,6 +177,27 @@ public class StudentDAO {
         e.printStackTrace();
     }
 }
+    
+    public void updateStudentDetails(Student student) throws SQLException {
+    String sql = "UPDATE Student SET matricNo=?, phoneNo=?, address=?, gender=?, program=?, yearOfStudy=?, internship=?, guardianName=?, guardianContact=?, emergencyContact=? WHERE userID=?";
+    
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, student.getMatricNo());
+        stmt.setString(2, student.getPhoneNo());
+        stmt.setString(3, student.getAddress());
+        stmt.setString(4, student.getGender());
+        stmt.setString(5, student.getProgram());
+        stmt.setInt(6, student.getYearOfStudy());
+        stmt.setBoolean(7, student.isInternship());
+        stmt.setString(8, student.getGuardianName());
+        stmt.setString(9, student.getGuardianContact());
+        stmt.setString(10, student.getEmergencyContact());
+        stmt.setString(11, student.getUserID());
+        stmt.executeUpdate();
+    }
+}
+
 
     
     

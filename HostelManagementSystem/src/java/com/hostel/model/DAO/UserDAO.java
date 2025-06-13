@@ -166,6 +166,24 @@ public class UserDAO {
     }
     return false;
 }
+    
+    public static boolean updatePasswordByUserID(String userID, String newPassword) {
+    boolean updated = false;
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(
+             "UPDATE user SET userPassword=? WHERE userID=?")) {
+
+        stmt.setString(1, newPassword); // You should hash passwords in real apps
+        stmt.setString(2, userID);
+
+        int rows = stmt.executeUpdate();
+        updated = rows > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return updated;
+}
+
 
     
     

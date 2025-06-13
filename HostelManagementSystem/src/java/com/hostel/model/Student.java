@@ -20,13 +20,14 @@ public class Student extends User {
     private String guardianContact;
     private String emergencyContact;
     private String roomID;
+    private double merit;
 
     public Student() {}
 
     public Student(String userID, String userName, String userEmail, String userPassword, String role,
                    String matricNo, String phoneNo, String address, String gender, String program,
                    int yearOfStudy, boolean internship, String guardianName, String guardianContact,
-                   String emergencyContact, String roomID) {
+                   String emergencyContact, String roomID, double merit) {
         super(userID, userName, userEmail, userPassword, role);
         this.matricNo = matricNo;
         this.phoneNo = phoneNo;
@@ -39,6 +40,7 @@ public class Student extends User {
         this.guardianContact = guardianContact;
         this.emergencyContact = emergencyContact;
         this.roomID = roomID;
+        this.merit = merit;
     }
 
     public void updateProfile() {
@@ -136,5 +138,12 @@ public class Student extends User {
 
     public void setRoomID(String roomID) {
         this.roomID = roomID;
+    }
+    
+    public double getMerit(){
+        return merit;
+    }
+    public void setMerit(double merit) {
+        this.merit = merit;
     }
 }

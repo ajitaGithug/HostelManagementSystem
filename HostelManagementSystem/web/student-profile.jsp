@@ -43,11 +43,26 @@
         .value {
             color: #333;
         }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background-color: #6a3093;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #512e7f;
+        }
     </style>
 </head>
 <body>
 
     <div class="profile-container">
+        <a href="student-dashboard.jsp" class="back-link">← Back</a>
         <h1>My Profile</h1>
         <div class="profile-row">
             <span class="label">User ID:</span>

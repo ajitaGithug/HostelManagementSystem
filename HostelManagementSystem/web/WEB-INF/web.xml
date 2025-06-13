@@ -9,10 +9,6 @@
         <servlet-class>com.hostel.controller.UserLoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <servlet-class>com.hostel.controller.ResetPasswordServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdatePasswordServlet</servlet-name>
         <servlet-class>com.hostel.controller.UpdatePasswordServlet</servlet-class>
     </servlet>
@@ -60,6 +56,14 @@
         <servlet-name>CompleteAdminProfileServlet</servlet-name>
         <servlet-class>com.hostel.controller.CompleteAdminProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>com.hostel.controller.BookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>com.hostel.controller.ResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/UserRegisterServlet</url-pattern>
@@ -67,10 +71,6 @@
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/UserLoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <url-pattern>/ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdatePasswordServlet</servlet-name>
@@ -119,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>CompleteAdminProfileServlet</servlet-name>
         <url-pattern>/CompleteAdminProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/BookingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
